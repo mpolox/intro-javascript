@@ -1,42 +1,22 @@
-import { getHeroesById, getHeroesByOwner } from "./backups/08-imports-find-filter";
+const apiKey = "UZgHd8Zauhexa000EvqDLpZHOGJx9UdD";
+// https://api.giphy.com/v1/gifs/random?api_key=UZgHd8Zauhexa000EvqDLpZHOGJx9UdD
 
+const peticion = fetch(`https://api.giphy.com/v1/gifs/random?api_key=${apiKey}`);
 
-// const promesa = new Promise( (resolve, reject) => {
+peticion
+  .then( (response) => response.json())
+  .then( ( data ) => {
+    if (data.data)
+    {
+      console.log("data exists")
+      const realData = data.data
+      const {url} = realData.images.original;
+      const img = document.createElement('img');
+      img.src = url;
+      document.body.append(img);      
+    } else{
+      console.log("No data", data)
+    }
 
-//     setTimeout(() => {
-//         const heroe = getHeroesById(2);
-//         // console.log(heroe)
-//         // console.log("2 segundos despues");
-//         resolve(heroe);
-//     }, 2000);
-
-// });
-
-// promesa.then( (heroe) => {
-//     console.log("Este es el heroe:", heroe)
-// }).catch(
-//     err => console.warn("no hay")
-// );
-
-
-const getHeroeByIdAsync =  (id) =>{
-
-    return new Promise( (resolve, reject) => {
-
-        setTimeout(() => {
-            console.log("2 segundos despues...");
-            const p1 = getHeroesById(id);     
-            if (p1){
-                resolve(p1);    //para el then
-            } else{
-                reject("no hay");   //para el catch
-            }
-            
-        }, 2000);    
-    });
-}
-
-getHeroeByIdAsync(1)
-    .then( heroe => console.log(heroe))
-    .catch(err => console.error(err));
-
+  })
+  .catch(console.log)

@@ -25,6 +25,8 @@ const getHeroeByIdAsync =  (id) =>{
 
         setTimeout(() => {
             console.log("2 segundos despues...");
+            const myOwners = getHeroesByOwner("DC");
+            console.log(myOwners)
             const p1 = getHeroesById(id);     
             if (p1){
                 resolve(p1);    //para el then
@@ -35,6 +37,8 @@ const getHeroeByIdAsync =  (id) =>{
         }, 2000);    
     });
 }
+
+console.log("Marcopolo")
 
 getHeroeByIdAsync(1)
     .then( heroe => console.log(heroe))
